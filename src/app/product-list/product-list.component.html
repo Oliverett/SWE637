@@ -1,0 +1,85 @@
+<div class="product-container">
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <h2>Filters</h2>
+    
+    <!-- Category Filter -->
+    <div class="filter-group">
+      <h3>Category</h3>
+      <select [(ngModel)]="selectedCategory" (change)="onCategoryChange(selectedCategory)">
+        <option value="">All Categories</option>
+        <option *ngFor="let category of categories" [value]="category">
+          {{category}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Size Filter -->
+    <div class="filter-group">
+      <h3>Size</h3>
+      <select [(ngModel)]="selectedSize" (change)="onSizeChange(selectedSize)">
+        <option [ngValue]="null">All Sizes</option>
+        <option *ngFor="let size of sizes" [value]="size">
+          {{size}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Price Range Filter -->
+    <div class="filter-group">
+      <h3>Price Range</h3>
+      <div class="price-inputs">
+        <input type="number" [(ngModel)]="minPrice" placeholder="Min Price" (change)="onPriceRangeChange()">
+        <input type="number" [(ngModel)]="maxPrice" placeholder="Max Price" (change)="onPriceRangeChange()">
+      </div>
+    </div>
+
+    <button class="clear-filters" (click)="clearFilters()">Clear Filters</button>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="products-grid">
+    <div *ngFor="let shoe of filteredShoes" class="product-card">
+      <a [routerLink]="['/products', shoe.id]" class="product-link">
+        <div class="product-image">
+          <img [src]="shoe.imageUrl" [alt]="shoe.name">
+          <div *ngIf="shoe.discount" class="discount-badge">
+            -{{shoe.discount}}%
+          </div>
+        </div>
+        
+        <div class="product-info">
+          <h3>{{shoe.name}}</h3>
+          <p class="brand">{{shoe.brand}}</p>
+          <div class="price-section">
+            <span class="price" [class.discounted]="shoe.discount">
+              ${{shoe.price}}
+            </span>
+            <span *ngIf="shoe.discount" class="original-price">
+              ${{shoe.price * (1 + shoe.discount/100)}}
+            </span>
+          </div>
+          
+          <div class="rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-value">{{shoe.rating}}</span>
+            <span class="reviews">({{shoe.reviews}})</span>
+          </div>
+        </div>
+      </a>
+
+      <div class="size-selector">
+        <select #sizeSelect>
+          <option *ngFor="let size of shoe.size" [value]="size">
+            Size {{size}}
+          </option>
+        </select>
+      </div>
+
+      <button class="add-to-cart" (click)="addToCart(shoe, +sizeSelect.value)">
+        Add to Cart
+      </button>
+    </div>
+  </div>
+</div>
+<app-cart></app-cart> 

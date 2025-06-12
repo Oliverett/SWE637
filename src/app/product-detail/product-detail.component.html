@@ -1,0 +1,43 @@
+<div class="product-detail" *ngIf="shoe">
+  <div class="product-image">
+    <img [src]="shoe.imageUrl" [alt]="shoe.name">
+    <div *ngIf="shoe.discount" class="discount-badge">
+      -{{shoe.discount}}%
+    </div>
+  </div>
+  
+  <div class="product-info">
+    <h1>{{shoe.name}}</h1>
+    <p class="brand">{{shoe.brand}}</p>
+    
+    <div class="price-section">
+      <span class="price" [class.discounted]="shoe.discount">
+        ${{shoe.price}}
+      </span>
+      <span *ngIf="shoe.discount" class="original-price">
+        ${{shoe.price * (1 + shoe.discount/100)}}
+      </span>
+    </div>
+    
+    <div class="rating">
+      <span class="stars">★★★★★</span>
+      <span class="rating-value">{{shoe.rating}}</span>
+      <span class="reviews">({{shoe.reviews}})</span>
+    </div>
+    
+    <p class="description">{{shoe.description}}</p>
+    
+    <div class="size-selector">
+      <label for="size">Select Size:</label>
+      <select id="size" [(ngModel)]="selectedSize">
+        <option *ngFor="let size of shoe.size" [value]="size">
+          Size {{size}}
+        </option>
+      </select>
+    </div>
+    
+    <button class="add-to-cart" (click)="addToCart()" [disabled]="!selectedSize">
+      Add to Cart
+    </button>
+  </div>
+</div> 

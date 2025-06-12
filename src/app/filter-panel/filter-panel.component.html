@@ -1,0 +1,17 @@
+<form [formGroup]="form" class="filter-form">
+  <label>
+    Category:
+    <select formControlName="category">
+      <option value="">All</option>
+      <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+    </select>
+  </label>
+
+  <label>
+    Size:
+    <select formControlName="size">
+      <option value="">All</option>
+      <option *ngFor="let s of sizes" [value]="s">{{ s }}</option>
+    </select>
+  </label>
+</form>

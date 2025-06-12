@@ -1,0 +1,13 @@
+<div class="product-grid">
+  <div *ngFor="let shoe of products" class="product-card">
+    <img [src]="shoe.imageUrl" [alt]="shoe.name" />
+    <h3>{{ shoe.name }}</h3>
+    <p>\${{ shoe.price }}</p>
+    <select #sz>
+      <option *ngFor="let s of shoe.size" [value]="s">{{ s }}</option>
+    </select>
+    <button (click)="addToCart(shoe, sz.valueAsNumber)">
+      Add to Cart
+    </button>
+  </div>
+</div>
